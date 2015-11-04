@@ -12,7 +12,7 @@ public class BootStrap {
 	 */
 	public static void main(String[] args) throws Exception {	
 		//Set port number
-		Server server = new Server(8080);
+		Server server = new Server(11050);
 		// create a ServletHander to attach servlets
 		ServletContextHandler servhandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		//Make server could serve static files
