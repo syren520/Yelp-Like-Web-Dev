@@ -33,7 +33,7 @@ public class RegisterUserServlet extends BaseServlet{
 				|| email == null || email.trim().equals("") 
 				|| passWord == null || passWord.trim().equals("")
 				|| confirmPassword == null || confirmPassword.trim().equals("") 
-				|| passWord != confirmPassword) {
+				|| !passWord.equals(confirmPassword)) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + REGISTRATION_ERROR_INVALID_DATA));
 			return;
 		}
