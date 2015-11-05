@@ -16,7 +16,4 @@ $(document).ready(function(e){
     $('.input-box').off('focus').on('focus', function(){
         $('.error-message').empty();
     });
-    $('.input-box').off('focus').on('focus', function(){
-        $('.error-message').empty();
-    });
 });
