@@ -66,7 +66,7 @@ public class DashboardServlet extends BaseServlet {
 			//Create query statement 
 			Statement stmt = db.createStatement();
 			//Execute a query, which returns a ResultSet object
-			ResultSet result = stmt.executeQuery("select * from review left outer join business on review.businessid=business.businessid;");
+			ResultSet result = stmt.executeQuery("select * from business left outer join review on review.businessid=business.businessid;");
 			//Go through result from db query
 			while (result.next()) {
 				//Get business and review info
