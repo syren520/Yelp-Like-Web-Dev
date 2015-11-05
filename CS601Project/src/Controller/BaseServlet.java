@@ -32,13 +32,4 @@ public class BaseServlet extends HttpServlet {
 		response.setStatus(HttpServletResponse.SC_OK);
 		return response.getWriter();
 	}
-
-	/*
-	 * Given a request, return the value of the parameter with the provided name
-	 * or null if none exists.
-	 */
-	protected String getParameterValue(HttpServletRequest request, String key) {
-		return request.getParameter(key);
-	}
-
 }

@@ -55,7 +55,7 @@ public class DashboardServlet extends BaseServlet {
 		
 		//Data structure to store nested busniesses objects with review list
 		HashMap<String, HashMap<String, Object>> businessesList = new HashMap<String, HashMap<String, Object>>();
-		HashMap businessInfo;
+		HashMap<String, Object> businessInfo;
 		TreeSet<String> reviewIdList;
 		HashMap<String, HashMap<String, String>> reviewsList = new HashMap<String, HashMap<String, String>>();
 		HashMap<String, String> reviewInfo;
@@ -66,7 +66,7 @@ public class DashboardServlet extends BaseServlet {
 			//Create query statement 
 			Statement stmt = db.createStatement();
 			//Execute a query, which returns a ResultSet object
-			ResultSet result = stmt.executeQuery("select * from business left outer join review on review.businessid=business.businessid;");
+			ResultSet result = stmt.executeQuery("select * from business left outer join review on business.businessid = review.businessid;");
 			//Go through result from db query
 			while (result.next()) {
 				//Get business and review info
@@ -83,19 +83,24 @@ public class DashboardServlet extends BaseServlet {
 				if (!businessesList.containsKey(businessId)) {
 					//If business doesn't exist in businesslist, then add business info in
 					// the list
-					businessInfo = new HashMap();
+					businessInfo = new HashMap<String, Object>();
 					businessInfo.put("businessName", businessName);
 					businessInfo.put("businessCity", businessCity);
 					businessInfo.put("businessState", businessState);
 					businessInfo.put("businessAddress", businessAddress);
 					//Create review list
 					reviewIdList = new TreeSet<String>();
-					reviewIdList.add(reviewId);
+					if (reviewId!=null) {
+						reviewIdList.add(reviewId);
+					}
 					businessInfo.put("reviewList", reviewIdList);
 					businessesList.put(businessId, businessInfo);
 				} else {
 					//If business exists in businesslist, then get reviewlist of the business and update it
-					((TreeSet<String>)businessesList.get(businessId).get("reviewList")).add(reviewId);
+					if (reviewId!=null) {
+						((TreeSet<String>)businessesList.get(businessId).get("reviewList")).add(reviewId);
+
+					}
 				}				
 				if (!reviewsList.containsKey(reviewId)) {
 					//Update review info in the reviewList
@@ -109,22 +114,25 @@ public class DashboardServlet extends BaseServlet {
 			}
 			//Iterator business to calculate the average rating of each business
 			Iterator businessIterator = businessesList.entrySet().iterator();
-		    while (businessIterator.hasNext()) {
-		        Map.Entry pair = (Map.Entry)businessIterator.next();
-		        TreeSet<String> reviews = (TreeSet<String>)((HashMap)pair.getValue()).get("reviewList");
-		        float aveRating = 0;
-		        String businessId = (String)pair.getKey();
-		        Iterator<String> reviewIterator = reviews.iterator();
-		        while (reviewIterator.hasNext()) {
-		        	String reviewId = reviewIterator.next();
-		        	aveRating += Float.parseFloat(reviewsList.get(reviewId).get("reviewRating"));
-		        }
-		        //Format to result to only kepp one decimal
-		        DecimalFormat df = new DecimalFormat("#.#");
-		        String resultAveRate = df.format(aveRating/reviews.size());
-		        //Add average rating to businesslist
-		        ((HashMap)businessesList.get(businessId)).put("businessAveRating", resultAveRate);
-		    }
+			while (businessIterator.hasNext()) {
+				Map.Entry pair = (Map.Entry) businessIterator.next();
+				TreeSet<String> reviews = (TreeSet<String>) ((HashMap) pair.getValue()).get("reviewList");
+				String businessId = (String) pair.getKey();
+				String resultAveRate = "0";
+				if (reviews.size() != 0) {
+					float aveRating = 0;
+					Iterator<String> reviewIterator = reviews.iterator();
+					while (reviewIterator.hasNext()) {
+						String reviewId = reviewIterator.next();
+						aveRating += Float.parseFloat(reviewsList.get(reviewId).get("reviewRating"));
+					}
+					// Format to result to only kepp one decimal
+					DecimalFormat df = new DecimalFormat("#.#");
+					resultAveRate = df.format(aveRating / reviews.size());
+				}
+				// Add average rating to businesslist
+				((HashMap) businessesList.get(businessId)).put("businessAveRating", resultAveRate);
+			}
 		    //close database
 			db.close();
 		} catch (SQLException e) {

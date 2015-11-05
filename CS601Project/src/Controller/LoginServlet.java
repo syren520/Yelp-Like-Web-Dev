@@ -12,8 +12,6 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 
-import Service.ViewPageProcesser;
-
 /*
  * Allows a user to log in
  */
@@ -30,7 +28,7 @@ public class LoginServlet extends BaseServlet {
 			return;
 		}
 				
-		String status = getParameterValue(request, STATUS);
+		String status = request.getParameter(STATUS);
 				
 		boolean statusok = status != null && status.equals(ERROR)?false:true;
 		boolean redirected = status != null && status.equals(NOT_LOGGED_IN)?true:false;
