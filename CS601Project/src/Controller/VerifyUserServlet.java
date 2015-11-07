@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Model.Database;
-import Service.HashTool;
 
 /*
  * Servlet invoked at login.
@@ -51,7 +50,7 @@ public class VerifyUserServlet extends BaseServlet {
 			} else {
 				String storedPassword = result.getString("password");
 				// Get 256sha hashed password and compare to user's password that stored in db
-				if (storedPassword.equals(HashTool.hashString(passWord))) {
+				if (storedPassword.equals(passWord)) {
 					HttpSession session = request.getSession();
 					session.setAttribute(USERNAME, name);
 					response.sendRedirect(response.encodeRedirectURL("/dashboard"));

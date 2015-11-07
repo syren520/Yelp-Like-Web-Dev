@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Model.Database;
-import Service.HashTool;
 
 public class RegisterUserServlet extends BaseServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,9 +40,8 @@ public class RegisterUserServlet extends BaseServlet{
 			Connection db = Database.getDBInstance();
 
 			Statement stmt = db.createStatement();
-			String hashedPassword = HashTool.hashString(passWord);
 			int result = stmt.executeUpdate("INSERT INTO user (username, password, email) "
-					+ "VALUES ('" + name + "', '" + hashedPassword + "', '" + email + "');");
+					+ "VALUES ('" + name + "', '" + passWord + "', '" + email + "');");
 			if (result == 1) {
 				HttpSession session = request.getSession();
 				session.setAttribute(USERNAME, name);
