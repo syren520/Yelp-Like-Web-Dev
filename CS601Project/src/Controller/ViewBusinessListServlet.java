@@ -29,7 +29,7 @@ import Model.Database;
  * Generate dashboard page.
  * Support both get and post method
  */
-public class DashboardServlet extends BaseServlet {
+public class ViewBusinessListServlet extends BaseServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -141,8 +141,11 @@ public class DashboardServlet extends BaseServlet {
 		}
 		//Use string template to generate the html page
 		STGroup stGroup = new STGroupDir("webContent/template", '$', '$');
-		ST view = stGroup.getInstanceOf("dashboardContent");
+		ST view = stGroup.getInstanceOf("viewBusinessList");
         view.add("userName", name);
+        view.add("businessesList", businessesList);
+        view.add("reviewsList", reviewsList);
+        
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());
 
