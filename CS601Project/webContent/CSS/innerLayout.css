@@ -1,0 +1,10 @@
+.home-title{
+	display: block;
+    width: 350px;
+    margin: 50px auto 50px auto;
+    font-size: 40px;
+}
+
+.content-info {
+    margin-top: 5px;
+}
