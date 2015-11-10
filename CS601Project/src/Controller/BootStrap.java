@@ -12,7 +12,7 @@ public class BootStrap {
 	 */
 	public static void main(String[] args) throws Exception {	
 		//Set port number
-		Server server = new Server(11050);
+		Server server = new Server(8080);
 		// create a ServletHander to attach servlets
 		ServletContextHandler servhandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		//Make server could serve static files
@@ -28,7 +28,8 @@ public class BootStrap {
 		servhandler.addServlet(DashboardServlet.class, "/dashboard");
 		servhandler.addServlet(LogoutServlet.class, "/logout");
 		servhandler.addServlet(RegisterUserServlet.class, "/registration");
-
+		servhandler.addServlet(ViewBusinessListServlet.class, "/viewBusinessList");
+		servhandler.addServlet(ViewSpecialBusinessListServlet.class, "/viewSpecialBusinessList");
 		// set the list of handlers for the server
 		server.setHandler(servhandler);
 
