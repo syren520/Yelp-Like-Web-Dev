@@ -1,4 +1,4 @@
-viewBusinessList(userName,businessesList,reviewsList) ::= <<
+viewBusinessList(userName,businessesList,reviewsList,search) ::= <<
 $headerIn()$
     <div class="row">
         <h1 class="home-title">Welcome to Yap!</h1>
@@ -20,15 +20,24 @@ $headerIn()$
                 <!--Reference web resource - collapse: http://getbootstrap.com/javascript/#collapse-->
                 <div class="content-info">
                     <div class="row">
-				        <div class="col-md-10">
+                    <div class="col-md-10">
+                       <form action="/viewSpecialBusinessList" method="get">
+                        <p class="search-bar"><b>Search business you want: <input type="text" name="searchname" /></b></p>
+                        <input type="submit" value="Submit" />
+                       </form>
+                       $if(!search)$
+				        <label class="business-list-error">Can't find the business you want,please try again! </label>
+				       $endif$				       
+				        <div class="col-md-10"> 
 				            $businessesList.keys:{k|
 				            <div class="panel panel-default">
 						            <div class="panel-heading">
-		                				<h4 class="panel-title">
-			                  				<a data-toggle="collapse" data-parent="#accordion" href="#$k$">
+						            <h4 class="panel-title">
+			                  				<a data-toggle="collapse" href="#$k$">
 			                  				<span class="glyphicon glyphicon-home"></span>
-			                  				$businessesList.(k).businessName$ -$businessesList.(k).businessAveRating$- Address: $businessesList.(k).businessAddress$, $businessesList.(k).businessCity$, $businessesList.(k).businessState$
+			                  				$businessesList.(k).businessName$
 			                  				</a>
+			                  				<a class = "btn-view-business" href="/viewSpecialBusinessList?businessid=$k$"><span class="glyphicon glyphicon-eye-open"></span>View</a>
 		                				</h4>
 		              				</div>
 		              				<div id="$k$" class="panel-collapse collapse in">

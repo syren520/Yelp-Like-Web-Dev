@@ -1,3 +1,4 @@
+
 package Controller;
 
 import java.io.IOException;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
@@ -30,7 +30,6 @@ import Model.Database;
  * Support both get and post method
  */
 public class ViewBusinessListServlet extends BaseServlet {
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
@@ -126,7 +125,7 @@ public class ViewBusinessListServlet extends BaseServlet {
 						String reviewId = reviewIterator.next();
 						aveRating += Float.parseFloat(reviewsList.get(reviewId).get("reviewRating"));
 					}
-					// Format to result to only kepp one decimal
+					// Format to result to only keep one decimal
 					DecimalFormat df = new DecimalFormat("#.#");
 					resultAveRate = df.format(aveRating / reviews.size());
 				}
@@ -139,15 +138,18 @@ public class ViewBusinessListServlet extends BaseServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//Get status to check the searching result
+		String status = request.getParameter(STATUS);	
+		boolean search = status != null && status.equals(NOTFOUND) ? false : true;
 		//Use string template to generate the html page
 		STGroup stGroup = new STGroupDir("webContent/template", '$', '$');
+		//We edit viewBusinessList string template, but  in here you call another template, th
 		ST view = stGroup.getInstanceOf("viewBusinessList");
         view.add("userName", name);
         view.add("businessesList", businessesList);
         view.add("reviewsList", reviewsList);
-        
+        view.add("search", search);
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());
-
 	}
 }
