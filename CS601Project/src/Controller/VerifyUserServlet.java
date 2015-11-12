@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +29,6 @@ public class VerifyUserServlet extends BaseServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		String name = request.getParameter(USERNAME);
 		String passWord = request.getParameter(PASSWORD);
 		//Check if name and password is valid
@@ -38,7 +38,6 @@ public class VerifyUserServlet extends BaseServlet {
 		}
 		try {
 			Connection db = Database.getDBInstance();
-
 			Statement stmt = db.createStatement();
 			// execute a query, which returns a ResultSet object
 			ResultSet result = stmt
@@ -49,10 +48,23 @@ public class VerifyUserServlet extends BaseServlet {
 				response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + ERROR));
 			} else {
 				String storedPassword = result.getString("password");
-				// Get 256sha hashed password and compare to user's password that stored in db
 				if (storedPassword.equals(passWord)) {
 					HttpSession session = request.getSession();
 					session.setAttribute(USERNAME, name);
+					//Get cookies from request
+					Cookie[] cookies = request.getCookies();
+					if (cookies != null && cookies.length > 0) {
+						//If cookies is not null then go through all cookies to find JSESSIONID,
+						//Set the cookie expired time to be 10 days
+						//Then add the cookie to response and set back to browser
+						for(int i = 0; i<cookies.length; i++) {
+							if(cookies[i].getName().compareTo("JSESSIONID") == 0) {
+								cookies[i].setMaxAge(3600*24*10);
+								response.addCookie(cookies[i]);
+							}
+						}
+					}
+					
 					response.sendRedirect(response.encodeRedirectURL("/dashboard"));
 				} else {
 					response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + ERROR));
