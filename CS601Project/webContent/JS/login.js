@@ -1,19 +1,18 @@
-$(document).ready(function(e){
-    $('#btn-login-form').click(function(e) {
-        $("#login-form").delay(100).fadeIn(100);
-        $("#register-form").fadeOut(100);
+$(document).ready(function(){
+//web-resource-reference - fade in/out : http://www.w3schools.com/jquery/jquery_fade.asp
+    $('#btn-login-form').off('click').on('click', function() {
+        $("#login-form").fadeIn(50);
+        $("#register-form").fadeOut(50);
         $('#btn-register-form').removeClass('active');
         $(this).addClass('active');
-        e.preventDefault();
     });
-    $('#btn-register-form').click(function(e) {
-        $("#register-form").delay(100).fadeIn(100);
-        $("#login-form").fadeOut(100);
+    $('#btn-register-form').off('click').on('click', function(){
+        $("#register-form").fadeIn(50);
+        $("#login-form").fadeOut(50);
         $('#btn-login-form').removeClass('active');
         $(this).addClass('active');
-        e.preventDefault();
     });
-    $('.input-box').off('focus').on('focus', function(){
+    $('.input-box').off('click').on('click', function(){
         $('.error-message').empty();
     });
 });

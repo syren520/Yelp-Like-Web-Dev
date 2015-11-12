@@ -8,3 +8,19 @@
 .content-info {
     margin-top: 5px;
 }
+
+.search-bar {
+	display: inline-block;
+}
+
+.business-list-error {
+	color:red;
+}
+.btn-view-business
+{
+	float: right;
+}
+#map {
+	width: 100%;
+	height: 480px;
+}

@@ -1,38 +1,41 @@
+/*Web-resource-reference- CSS color -http://www.w3schools.com/cssref/css_colors.asp*/
 body {
     padding-top: 90px;
 }
-.panel-login {
-    border-color: #ccc;
+.panel-form {
+    border-color: #484848;
 }
-.panel-login .panel-heading {
+.panel-heading {
     text-align:center;
 }
-.panel-login .panel-heading a{
-    text-decoration: none;
-    color: #666;
+.panel-heading span{
+    color: #404040;
     font-weight: bold;
     font-size: 15px;
 }
-.panel-login .panel-heading a.active{
-    color: #029f5b;
-    font-size: 18px;
+.panel-heading span.active{
+    color: #CCCC00;
+    font-size: 20px;
+}
+.btn-form {
+	cursor:pointer;
 }
 .btn-submit {
-    color: #fff;
+    color: #FFFFFF;
     font-size: 14px;
     height: auto;
-    font-weight: normal;
     padding: 14px 0;
     text-transform: uppercase;
 }
 .btn-submit:hover {
-    color: #fff;
+    color: #FFFFFF;
 }
 .btn-login {
-    background-color: #59B2E0;
-    border-color: #59B2E6;
+    background-color: #0099FF;
 }
 .btn-register {
-    background-color: #1CB94E;
-    border-color: #1CB94A;
+    background-color: #00CC00;
+}
+.error-message {
+	color: #FF0000;
 }

@@ -2,15 +2,15 @@ login(statusok, redirected, registrationInvalidData, isRegistrationError) ::= <<
 $headerOut()$
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-login">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-form">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-md-6">
-                            <a href="#" class="active" id="btn-login-form">Login</a>
+                        <div class="col-md-6 btn-form">
+                            <span class="active" id="btn-login-form">Login</span>
                         </div>
-                        <div class="col-md-6">
-                            <a href="#" id="btn-register-form">Register</a>
+                        <div class="col-md-6 btn-form">
+                            <span id="btn-register-form">Register</span>
                         </div>
                     </div>
                     <hr>
@@ -26,7 +26,7 @@ $headerOut()$
 	                                    		style="display: none;"
 	                                    	$endif$>
                                 <div class="row">
-                                    <div class="error-message col-md-6 col-centered">
+                                    <div class="error-message col-md-6 col-md-offset-3">
 	                                    <label>
 	                                    	$if(!statusok)$
 	                                    		Username/Password is not match!
@@ -37,17 +37,17 @@ $headerOut()$
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                	<label class="control-label">Username</label>
-                                    <input type="text" name="username" id="username" class="form-control input-box" placeholder="Username" value="" required>
+                                	<label>Username</label>
+                                    <input type="text" name="username" class="form-control input-box" placeholder="Username" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Password</label>
-                                    <input type="password" name="password" id="password" class="form-control input-box" placeholder="Password" required>
+                                    <label>Password</label>
+                                    <input type="password" name="password" class="form-control input-box" placeholder="Password" required>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6 col-md-offset-3">
-                                            <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-login btn-submit" value="Log In">
+                                            <input type="submit" class="form-control btn btn-login btn-submit" value="login">
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@ $headerOut()$
 	                                    		style="display: none;"
 	                                    	$endif$>
 	                           <div class="row">
-                                    <div class="error-message col-md-6 col-centered">
+                                    <div class="error-message col-md-6 col-md-offset-3">
 	                                    <label>
 	                                    	$if (registrationInvalidData)$
 	                                    		Invalid input data!
@@ -70,30 +70,22 @@ $headerOut()$
 	                                    </label>
                                     </div>
                                 </div>
-                                <!-Reference web resource - Validator checking: http://1000hz.github.io/bootstrap-validator/->
                                 <div class="form-group">
-									<label for="inputName" class="control-label">Username</label>
-    								<input type="text" name="username" class="form-control input-box" id="inputName" placeholder="Username" required>  
+									<label>Username</label>
+    								<input type="text" name="username" class="form-control input-box" placeholder="Username" required>  
 								</div>
                                 <div class="form-group">
-									<label for="inputEmail" class="control-label">Email</label>
-    								<input type="email" name="email" class="form-control input-box" id="inputEmail" placeholder="Email" data-error="That email address is invalid" required>
-    								<div class="help-block with-errors"></div>                                
+									<label>Email</label>
+    								<input type="email" name="email" class="form-control input-box" placeholder="Email" required>
 								</div>
                                 <div class="form-group">
-      								<label for="inputPassword" class="control-label input-box">Password</label>
-      								<input type="password" name="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" required>
-      								<span class="help-block">Minimum of 6 characters</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPasswordConfirm" class="control-label input-box">Confirm Password</label>
-                                    <input type="password" name="confirmPassword" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Password doesn't match!" placeholder="Confirm Password" required>
-      								<div class="help-block with-errors"></div>
+      								<label>Password</label>
+      								<input type="password" name="password" class="form-control input-box" placeholder="Password" required>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-6 col-md-offset-3">
-                                            <input type="submit" name="register-submit" id="register-submit" class="form-control btn btn-register btn-submit" value="Register Now">
+                                            <input type="submit" class="form-control btn btn-register btn-submit" value="register">
                                         </div>
                                     </div>
                                 </div>
