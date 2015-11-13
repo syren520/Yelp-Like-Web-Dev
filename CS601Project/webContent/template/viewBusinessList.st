@@ -5,8 +5,8 @@ $headerIn()$
     </div>
     <div class="row">
         <div class="col-md-4">
-            <div class="side-menu well sidebar-nav">
-                <ul class="nav nav-list">
+            <div class="well">
+                <ul class="nav">
                     <li class="nav-header">Welcome</li>
                     <li class="active"><a style="color: #696969">$userName$</a></li>
                     <li class="nav-header">User Menu</li>

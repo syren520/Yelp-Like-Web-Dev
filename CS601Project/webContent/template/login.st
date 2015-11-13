@@ -26,7 +26,7 @@ $headerOut()$
 	                                    		style="display: none;"
 	                                    	$endif$>
                                 <div class="row">
-                                    <div class="error-message col-md-6 col-md-offset-3">
+                                    <div class="error-message col-md-6 col-md-offset-4">
 	                                    <label>
 	                                    	$if(!statusok)$
 	                                    		Username/Password is not match!
