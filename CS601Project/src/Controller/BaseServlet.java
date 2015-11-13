@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /*
@@ -22,6 +21,8 @@ public class BaseServlet extends HttpServlet {
 	public static final String NOT_LOGGED_IN = "not_logged_in";
 	public static final String IS_REGISTRATION_ERROR = "is_registration_error";
 	public static final String REGISTRATION_ERROR_INVALID_DATA = "registration_error_invalid_data";
+	public static final String NOTFOUND = "not_found";
+
 
 	/*
 	 * Prepare a response of HTML 200 - OK. Set the content type and status.
