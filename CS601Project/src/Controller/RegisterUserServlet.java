@@ -6,11 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Model.Database;
+import Service.CookieService;
 
 public class RegisterUserServlet extends BaseServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -25,14 +27,11 @@ public class RegisterUserServlet extends BaseServlet{
 
 		String name = request.getParameter(USERNAME);
 		String passWord = request.getParameter(PASSWORD);
-		String confirmPassword = request.getParameter(CONFIRMPASS);
 		String email = request.getParameter(EMAIL);
 		//Check if passed in data is valid
 		if (name == null || name.trim().equals("") 
 				|| email == null || email.trim().equals("") 
-				|| passWord == null || passWord.trim().equals("")
-				|| confirmPassword == null || confirmPassword.trim().equals("") 
-				|| !passWord.equals(confirmPassword)) {
+				|| passWord == null || passWord.trim().equals("")) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + REGISTRATION_ERROR_INVALID_DATA));
 			return;
 		}
@@ -45,6 +44,7 @@ public class RegisterUserServlet extends BaseServlet{
 			if (result == 1) {
 				HttpSession session = request.getSession();
 				session.setAttribute(USERNAME, name);
+				response = CookieService.setCookieExpiredTime(request, response);
 				response.sendRedirect(response.encodeRedirectURL("/dashboard"));
 			} else {
 				response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + IS_REGISTRATION_ERROR));

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Model.Database;
+import Service.CookieService;
 
 /*
  * Servlet invoked at login.
@@ -51,20 +52,7 @@ public class VerifyUserServlet extends BaseServlet {
 				if (storedPassword.equals(passWord)) {
 					HttpSession session = request.getSession();
 					session.setAttribute(USERNAME, name);
-					//Get cookies from request
-					Cookie[] cookies = request.getCookies();
-					if (cookies != null && cookies.length > 0) {
-						//If cookies is not null then go through all cookies to find JSESSIONID,
-						//Set the cookie expired time to be 10 days
-						//Then add the cookie to response and set back to browser
-						for(int i = 0; i<cookies.length; i++) {
-							if(cookies[i].getName().compareTo("JSESSIONID") == 0) {
-								cookies[i].setMaxAge(3600*24*10);
-								response.addCookie(cookies[i]);
-							}
-						}
-					}
-					
+					response = CookieService.setCookieExpiredTime(request, response);
 					response.sendRedirect(response.encodeRedirectURL("/dashboard"));
 				} else {
 					response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + ERROR));
