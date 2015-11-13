@@ -16,6 +16,7 @@ public class BuildDataList {
 		TreeSet<String> reviewIdList;
 		HashMap<String, HashMap<String, String>> reviewsList = new HashMap<String, HashMap<String, String>>();
 		HashMap<String, String> reviewInfo;
+		HashMap<String, Object> list = new HashMap<String, Object>();
 		while (result.next()) {
 			// Get business and review info
 			String businessId = result.getString("businessid");
@@ -61,6 +62,10 @@ public class BuildDataList {
 				reviewsList.put(reviewId, reviewInfo);
 			}
 		}
+		if (businessesList.isEmpty()) {
+			// ResultSet is empty
+			return null;
+		}
 		// Calculate average rating of business
 		Iterator businessIterator = businessesList.entrySet().iterator();
 		while (businessIterator.hasNext()) {
@@ -83,7 +88,6 @@ public class BuildDataList {
 			((HashMap) businessesList.get(businessId)).put("businessAveRating", resultAveRate);
 		}
 		// put result into hashmap
-		HashMap<String, Object> list = new HashMap<String, Object>();
 		list.put("businessesList", businessesList);
 		list.put("reviewsList", reviewsList);
 

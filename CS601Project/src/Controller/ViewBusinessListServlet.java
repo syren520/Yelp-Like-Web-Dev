@@ -68,8 +68,15 @@ public class ViewBusinessListServlet extends BaseServlet {
 		STGroup stGroup = new STGroupDir("webContent/template", '$', '$');
 		ST view = stGroup.getInstanceOf("viewBusinessList");
 		view.add("userName", name);
-		view.add("businessesList", formattedData.get("businessesList"));
-		view.add("reviewsList", formattedData.get("reviewsList"));
+		if (formattedData == null) {
+			//If no business exist, then set businesseslist and reviewslist to null
+			view.add("businessesList", null);
+			view.add("reviewsList", null);
+		} else {
+			//Otherwise put busiesslist and reviewslist in template
+			view.add("businessesList", formattedData.get("businessesList"));
+			view.add("reviewsList", formattedData.get("reviewsList"));
+		}
 		view.add("search", search);
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());

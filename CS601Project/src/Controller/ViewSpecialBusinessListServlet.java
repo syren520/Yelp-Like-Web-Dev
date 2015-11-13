@@ -58,6 +58,10 @@ public class ViewSpecialBusinessListServlet extends BaseServlet {
 					"select * from business left outer join review on business.businessid = review.businessid where business.businessid=\""
 							+ paramBusinessid + "\" or business.businessname=\"" + searchName + "\";");
 			speciallist = BuildDataList.buildDataList(result);
+			if (speciallist == null) {
+				response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + NOTFOUND));
+				return;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
