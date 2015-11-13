@@ -14,15 +14,15 @@ $headerIn()$
                 </ul>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="main-content">
                 <!--Reference web resource - panel with heading: http://getbootstrap.com/components/#panels-->
                 <!--Reference web resource - collapse: http://getbootstrap.com/javascript/#collapse-->
                 <div class="content-info">
                     <div class="row">
 				         $businessesList.keys:{k|
-			                  		<div class="panel panel-default">
-						            <div class="panel-heading">
+			               <div class="panel panel-default">
+						          <div class="panel-heading">
 						            <h4 class="panel-title">
 			                  				<a data-toggle="collapse" href="#$k$">
 			                  				<span class="glyphicon glyphicon-home"></span>
@@ -40,7 +40,7 @@ $headerIn()$
 							                <li class="list-group-item">
 							                  	<span class="glyphicon glyphicon-heart text-primary"></span>
 							                  	<span class="review">
-													Address: $businessesList.(k).businessAddress$,$businessesList.(k).businessState$, $businessesList.(k).businessCity$ 
+													Address: <span class="address">$businessesList.(k).businessAddress$,$businessesList.(k).businessState$, $businessesList.(k).businessCity$</span> 
 							    				</span>
 							                </li>
 				              				$businessesList.(k).reviewIdList:{r| 
@@ -54,6 +54,7 @@ $headerIn()$
 			              			 	</ul>
 						           	 </div>
 					         </div>
+						     <div id="map"></div>
 					         }$
 				          </div>
 				        </div>
@@ -62,5 +63,7 @@ $headerIn()$
             </div>
         </div>
     </div>
+<script src="/JS/map.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
 $footerIn()$
 >>

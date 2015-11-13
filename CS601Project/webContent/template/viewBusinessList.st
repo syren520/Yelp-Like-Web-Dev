@@ -14,13 +14,12 @@ $headerIn()$
                 </ul>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="main-content">
                 <!--Reference web resource - panel with heading: http://getbootstrap.com/components/#panels-->
                 <!--Reference web resource - collapse: http://getbootstrap.com/javascript/#collapse-->
                 <div class="content-info">
                     <div class="row">
-                    <div class="col-md-10">
                        <form action="/viewSpecialBusinessList" method="get">
                         <p class="search-bar"><b>Search business you want: <input type="text" name="searchname" /></b></p>
                         <input type="submit" value="Submit" />
@@ -28,7 +27,6 @@ $headerIn()$
                        $if(!search)$
 				        <label class="business-list-error">Can't find the business you want,please try again! </label>
 				       $endif$				       
-				        <div class="col-md-10"> 
 				            $businessesList.keys:{k|
 				            <div class="panel panel-default">
 						            <div class="panel-heading">
@@ -54,7 +52,6 @@ $headerIn()$
 						           	 </div>
 					         </div>
 						     }$
-				          </div>
 				        </div>
 				    </div>
                 </div>
