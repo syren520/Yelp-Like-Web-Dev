@@ -21,11 +21,11 @@ import Model.Database;
 import Service.BuildDataList;
 
 /*
- * Servlet invoked at viewBusinessList.
- * Generate view business list page.
+ * Servlet invoked at viewSpecialBusinessList.
+ * Generate view special business list page.
  * Support both get and post method
  */
-public class ViewBusinessListServlet extends BaseServlet {
+public class ViewSpecialBusinessListServlet extends BaseServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
@@ -41,43 +41,37 @@ public class ViewBusinessListServlet extends BaseServlet {
 		// Check if user exist in session
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute(USERNAME);
+		String paramBusinessid = request.getParameter("businessid");
+		String searchName = request.getParameter("searchname");
 		if (name == null) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
 			return;
 		}
-		HashMap<String, Object> formattedData = new HashMap<String, Object>();
+		HashMap<String, Object> speciallist = new HashMap<String, Object>();
 		try {
-
 			// Create database instance to build database connection
 			Connection db = Database.getDBInstance();
 			// Create query statement
 			Statement stmt = db.createStatement();
 			// Execute a query, which returns a ResultSet object
 			ResultSet result = stmt.executeQuery(
-					"select * from business left outer join review on business.businessid = review.businessid;");
-			formattedData = BuildDataList.buildDataList(result);
-			db.close();
+					"select * from business left outer join review on business.businessid = review.businessid where business.businessid=\""
+							+ paramBusinessid + "\" or business.businessname=\"" + searchName + "\";");
+			speciallist = BuildDataList.buildDataList(result);
+			if (speciallist == null) {
+				response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + NOTFOUND));
+				return;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// Get status to check the searching result
-		String status = request.getParameter(STATUS);
-		boolean search = status != null && status.equals(NOTFOUND) ? false : true;
 		// Use string template to generate the html page
 		STGroup stGroup = new STGroupDir("webContent/template", '$', '$');
-		ST view = stGroup.getInstanceOf("viewBusinessList");
+		ST view = stGroup.getInstanceOf("viewSpecialBusinessList");
 		view.add("userName", name);
-		if (formattedData == null) {
-			//If no business exist, then set businesseslist and reviewslist to null
-			view.add("businessesList", null);
-			view.add("reviewsList", null);
-		} else {
-			//Otherwise put busiesslist and reviewslist in template
-			view.add("businessesList", formattedData.get("businessesList"));
-			view.add("reviewsList", formattedData.get("reviewsList"));
-		}
-		view.add("search", search);
+		view.add("businessesList", speciallist.get("businessesList"));
+		view.add("reviewsList", speciallist.get("reviewsList"));
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());
 	}

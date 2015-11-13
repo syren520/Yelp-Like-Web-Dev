@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Model.Database;
+import Service.CookieService;
 
 /*
  * Servlet invoked at login.
@@ -28,7 +30,6 @@ public class VerifyUserServlet extends BaseServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		String name = request.getParameter(USERNAME);
 		String passWord = request.getParameter(PASSWORD);
 		//Check if name and password is valid
@@ -38,7 +39,6 @@ public class VerifyUserServlet extends BaseServlet {
 		}
 		try {
 			Connection db = Database.getDBInstance();
-
 			Statement stmt = db.createStatement();
 			// execute a query, which returns a ResultSet object
 			ResultSet result = stmt
@@ -49,10 +49,10 @@ public class VerifyUserServlet extends BaseServlet {
 				response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + ERROR));
 			} else {
 				String storedPassword = result.getString("password");
-				// Get 256sha hashed password and compare to user's password that stored in db
 				if (storedPassword.equals(passWord)) {
 					HttpSession session = request.getSession();
 					session.setAttribute(USERNAME, name);
+					response = CookieService.setCookieExpiredTime(request, response);
 					response.sendRedirect(response.encodeRedirectURL("/dashboard"));
 				} else {
 					response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + ERROR));

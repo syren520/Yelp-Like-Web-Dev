@@ -1,4 +1,4 @@
-viewBusinessList(userName,businessesList,reviewsList,search) ::= <<
+viewSpecialBusinessList(userName,businessesList,reviewsList) ::= <<
 $headerIn()$
     <div class="row">
         <h1 class="home-title">Welcome to Yap!</h1>
@@ -20,26 +20,29 @@ $headerIn()$
                 <!--Reference web resource - collapse: http://getbootstrap.com/javascript/#collapse-->
                 <div class="content-info">
                     <div class="row">
-                       <form action="/viewSpecialBusinessList" method="get">
-                        <p class="search-bar"><b>Search business you want: <input type="text" name="searchname" /></b></p>
-                        <input type="submit" value="Submit" />
-                       </form>
-                       $if(!search)$
-				        <label class="business-list-error">Can't find the business you want,please try again! </label>
-				       $endif$				       
-				            $businessesList.keys:{k|
-				            <div class="panel panel-default">
-						            <div class="panel-heading">
+				         $businessesList.keys:{k|
+			               <div class="panel panel-default">
+						          <div class="panel-heading">
 						            <h4 class="panel-title">
 			                  				<a data-toggle="collapse" href="#$k$">
 			                  				<span class="glyphicon glyphicon-home"></span>
 			                  				$businessesList.(k).businessName$
 			                  				</a>
-			                  				<a class = "btn-view-business" href="/viewSpecialBusinessList?businessid=$k$"><span class="glyphicon glyphicon-eye-open"></span>View</a>
 		                				</h4>
 		              				</div>
 		              				<div id="$k$" class="panel-collapse collapse in">
 			              				<ul class="list-group">
+			              					<li class="list-group-item">
+							                  	<span class="glyphicon glyphicon-heart text-primary"></span>
+							                  	<span class="review">
+													Averagerating:$businessesList.(k).businessAveRating$
+							                </li>
+							                <li class="list-group-item">
+							                  	<span class="glyphicon glyphicon-heart text-primary"></span>
+							                  	<span class="review">
+													Address: <span class="address">$businessesList.(k).businessAddress$,$businessesList.(k).businessState$, $businessesList.(k).businessCity$</span> 
+							    				</span>
+							                </li>
 				              				$businessesList.(k).reviewIdList:{r| 
 							                  <li class="list-group-item">
 							                  	<span class="glyphicon glyphicon-pencil text-primary"></span>
@@ -51,12 +54,16 @@ $headerIn()$
 			              			 	</ul>
 						           	 </div>
 					         </div>
-						     }$
+						     <div id="map"></div>
+					         }$
+				          </div>
 				        </div>
 				    </div>
                 </div>
             </div>
         </div>
     </div>
+<script src="/JS/map.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
 $footerIn()$
 >>
