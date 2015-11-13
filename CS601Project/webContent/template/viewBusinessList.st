@@ -33,7 +33,7 @@ $headerIn()$
 						            <h4 class="panel-title">
 			                  				<a data-toggle="collapse" href="#$k$">
 			                  				<span class="glyphicon glyphicon-home"></span>
-			                  				$businessesList.(k).businessName$
+			                  				$businessesList.(k).businessName$ - AvgRate: $businessesList.(k).businessAveRating$ 
 			                  				</a>
 			                  				<a class = "btn-view-business" href="/viewSpecialBusinessList?businessid=$k$"><span class="glyphicon glyphicon-eye-open"></span>View</a>
 		                				</h4>
