@@ -22,7 +22,7 @@ public class BaseServlet extends HttpServlet {
 	public static final String IS_REGISTRATION_ERROR = "is_registration_error";
 	public static final String REGISTRATION_ERROR_INVALID_DATA = "registration_error_invalid_data";
 	public static final String NOTFOUND = "not_found";
-
+	public static final String NOREVIEWS = "noreviews";
 
 	/*
 	 * Prepare a response of HTML 200 - OK. Set the content type and status.

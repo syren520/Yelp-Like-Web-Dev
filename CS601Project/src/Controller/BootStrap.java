@@ -25,8 +25,13 @@ public class BootStrap {
 		servhandler.addServlet(RegisterUserServlet.class, "/registration");
 		servhandler.addServlet(ViewBusinessListServlet.class, "/viewBusinessList");
 		servhandler.addServlet(ViewSpecialBusinessListServlet.class, "/viewSpecialBusinessList");
+		servhandler.addServlet(SearchReviewsServlet.class, "/searchReviews");
+		servhandler.addServlet(ShowReviewsServlet.class, "/showReviews");
+		servhandler.addServlet(MyReviewsServlet.class, "/myReviews");
+		servhandler.addServlet(DeleteReviewsServlet.class, "/delete");
+		servhandler.addServlet(UpdateReviewsServlet.class, "/updateReviews");
+		servhandler.addServlet(EditReviewsServlet.class, "/editReviews");
 		//Make server could serve static files
-		//ResourceHandler is used to serve static files
 		ResourceHandler resource_handler = new ResourceHandler();
 		//Set the directory to true
         resource_handler.setDirectoriesListed(true);
@@ -37,6 +42,8 @@ public class BootStrap {
         //Add handlers to this handler list
         handlers.setHandlers(new Handler[] { resource_handler, servhandler });
 		// set the list of handlers for the server
+        //server.setHandler(servhandler);
+        //server.setHandler(resource_handler);
         server.setHandler(handlers);
 		// start the server
 		server.start();

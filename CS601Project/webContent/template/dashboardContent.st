@@ -11,7 +11,8 @@ $headerIn()$
                     <li class="active"><a style="color: #696969">$userName$</a></li>
                     <li class="nav-header">User Menu</li>
                     <li><a href="/viewBusinessList">Business List</a></li>
-                    <li><a href="#">Your reviews</a></li>
+                    <li><a href="/searchReviews">Search reviews you want</a></li>
+				    <li> <a href="/myReviews">My Reviews</a></li>
                     <li><a href="logout">Log out</a></li>
                 </ul>
             </div>
