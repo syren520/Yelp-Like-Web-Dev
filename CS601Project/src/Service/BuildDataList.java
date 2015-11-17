@@ -67,6 +67,7 @@ public class BuildDataList {
 			return null;
 		}
 		// Calculate average rating of business
+		// web resource reference - iterate hashmap in java：http://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
 		Iterator businessIterator = businessesList.entrySet().iterator();
 		while (businessIterator.hasNext()) {
 			Map.Entry pair = (Map.Entry) businessIterator.next();
