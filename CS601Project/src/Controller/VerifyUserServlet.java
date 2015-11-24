@@ -38,12 +38,8 @@ public class VerifyUserServlet extends BaseServlet {
 			return;
 		}
 		try {
-			Connection db = Database.getDBInstance();
-			Statement stmt = db.createStatement();
-			// execute a query, which returns a ResultSet object
-			ResultSet result = stmt
-					.executeQuery("SELECT password FROM user WHERE username = \"" + name + "\";");
-			
+			Database db = new Database();
+			ResultSet result = db.VerifyUser(name);
 			if (!result.next()) {
 				// ResultSet is empty
 				response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + ERROR));
@@ -58,7 +54,7 @@ public class VerifyUserServlet extends BaseServlet {
 					response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + ERROR));
 				}
 			}
-			db.close();
+			db.closeDB();
 		} catch (SQLException e) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + ERROR));
 			// TODO Auto-generated catch block

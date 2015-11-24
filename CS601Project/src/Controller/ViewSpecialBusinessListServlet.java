@@ -49,19 +49,14 @@ public class ViewSpecialBusinessListServlet extends BaseServlet {
 		}
 		HashMap<String, Object> speciallist = new HashMap<String, Object>();
 		try {
-			// Create database instance to build database connection
-			Connection db = Database.getDBInstance();
-			// Create query statement
-			Statement stmt = db.createStatement();
-			// Execute a query, which returns a ResultSet object
-			ResultSet result = stmt.executeQuery(
-					"select * from business left outer join review on business.businessid = review.businessid where business.businessid=\""
-							+ paramBusinessid + "\" or business.businessname=\"" + searchName + "\";");
+			Database db = new Database();
+			ResultSet result = db.ViewSpecialBUsinessLIst(paramBusinessid, searchName);
 			speciallist = BuildDataList.buildDataList(result);
 			if (speciallist == null) {
 				response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + NOTFOUND));
 				return;
 			}
+			db.closeDB();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -31,6 +31,8 @@ public class BootStrap {
 		servhandler.addServlet(DeleteReviewsServlet.class, "/delete");
 		servhandler.addServlet(UpdateReviewsServlet.class, "/updateReviews");
 		servhandler.addServlet(EditReviewsServlet.class, "/editReviews");
+		servhandler.addServlet(AddReviewsServlet.class, "/addReviews");
+		servhandler.addServlet(AddReviews2Servlet.class, "/addReviews2");
 		//Make server could serve static files
 		ResourceHandler resource_handler = new ResourceHandler();
 		//Set the directory to true
