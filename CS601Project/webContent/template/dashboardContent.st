@@ -14,6 +14,7 @@ $headerIn()$
                     <li><a href="/searchReviews">Search reviews you want</a></li>
 				    <li> <a href="/myReviews">My Reviews</a></li>
                     <li><a href="logout">Log out</a></li>
+                    <li><a href="showUser">show user</a></li>
                 </ul>
             </div>
         </div>

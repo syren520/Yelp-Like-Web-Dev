@@ -13,8 +13,8 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 
 /*
- * Servlet invoked at editReviews.
- * Generate edit view page.
+ * Servlet invoked at addBusiness.
+ * Generate edit user add new business page.
  * Support both get and post method
  */
 public class AddBusinessServlet extends BaseServlet {

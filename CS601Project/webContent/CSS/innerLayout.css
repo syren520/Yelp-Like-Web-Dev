@@ -27,3 +27,6 @@
 	width: 100%;
 	height: 480px;
 }
+.error-message {
+	color: #FF0000;
+}

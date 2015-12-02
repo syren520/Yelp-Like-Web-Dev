@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import Model.Database;
 
 /*
- * Servlet invoked at editReviews.
- * Generate edit view page.
+ * Servlet invoked at addBusiness.
  * Support both get and post method
  */
 public class AddBusinessProcessorServlet extends BaseServlet {
@@ -37,7 +36,7 @@ public class AddBusinessProcessorServlet extends BaseServlet {
 			return;
 		}
 		Database db=new Database();
-		int result = db.AddBusiness2(businessName,address,state,city,type);
+		int result = db.addBusinessProcessor(businessName,address,state,city,type);
 		response.sendRedirect(response.encodeRedirectURL("/viewBusinessList"));
 		db.closeDB();
 	}

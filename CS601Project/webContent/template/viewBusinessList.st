@@ -11,6 +11,7 @@ $headerIn()$
                     <li class="active"><a style="color: #696969">$userName$</a></li>
                     <li class="nav-header">User Menu</li>
                     <li><a href="/dashboard">Back home</a></li>
+                    <li><a href="/addBusiness">Add business</a></li>
                 </ul>
             </div>
         </div>
@@ -35,6 +36,7 @@ $headerIn()$
 			                  				<span class="glyphicon glyphicon-home"></span>
 			                  				$businessesList.(k).businessName$ - AvgRate: $businessesList.(k).businessAveRating$ 
 			                  				</a>
+			                  				<a class = "btn-add-reviews" href="/addReviews?businessId=$k$"><span class="glyphicon glyphicon-plus"></span>Add reviews</a>
 			                  				<a class = "btn-view-business" href="/viewSpecialBusinessList?businessid=$k$"><span class="glyphicon glyphicon-eye-open"></span>View</a>
 		                				</h4>
 		              				</div>

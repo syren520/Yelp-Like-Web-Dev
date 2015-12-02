@@ -32,7 +32,10 @@ public class BootStrap {
 		servhandler.addServlet(UpdateReviewsServlet.class, "/updateReviews");
 		servhandler.addServlet(EditReviewsServlet.class, "/editReviews");
 		servhandler.addServlet(AddReviewsServlet.class, "/addReviews");
-		servhandler.addServlet(AddReviews2Servlet.class, "/addReviews2");
+		servhandler.addServlet(AddReviewsProcessorServlet.class, "/addReviewsProcessor");
+		servhandler.addServlet(AddBusinessServlet.class, "/addBusiness");
+		servhandler.addServlet(AddBusinessProcessorServlet.class, "/addBusinessProcessor");
+		servhandler.addServlet(ShowUserServlet .class, "/showUser");
 		//Make server could serve static files
 		ResourceHandler resource_handler = new ResourceHandler();
 		//Set the directory to true

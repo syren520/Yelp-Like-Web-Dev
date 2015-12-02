@@ -31,7 +31,7 @@ public class Database {
 		}
 	}
 
-	public int RegisterUser(String name, String passWord, String email) {
+	public int registerUser(String name, String passWord, String email) {
 		try {
 			Statement stmt = this.con.createStatement();
 			int result = stmt.executeUpdate("INSERT INTO user (username, password, email) " + "VALUES ('" + name
@@ -41,7 +41,7 @@ public class Database {
 		}
 		return 0;
 	}
-	public int AddReviews2(String name, String businessId,String reviewRating,String reviewContent)
+	public int addReviewsProcessor(String name, String businessId,String reviewRating,String reviewContent)
 	{
 		try {
 			Statement stmt = this.con.createStatement();
@@ -51,7 +51,7 @@ public class Database {
 		}
 		return 0;
 	}
-	public int DeleteReviews(String reviewId)
+	public int deleteReviews(String reviewId)
 	{
 		try {
 			Statement stmt = this.con.createStatement();
@@ -61,7 +61,7 @@ public class Database {
 		}
 		return 0;	
 	}
-	public ResultSet EditReviews(String reviewId)
+	public ResultSet editReviews(String reviewId)
 	{
 		try {
 			Statement stmt = this.con.createStatement();
@@ -71,7 +71,7 @@ public class Database {
 		}
 		return null ;	
 	}
-	public ResultSet MyReviews(String name)
+	public ResultSet myReviews(String name)
 	{
 		try {
 			Statement stmt = this.con.createStatement();
@@ -82,7 +82,7 @@ public class Database {
 		}
 		return null ;	
 	}
-	public ResultSet SearchReviews()
+	public ResultSet searchReviews()
 	{
 		try {
 			Statement stmt = this.con.createStatement();
@@ -92,7 +92,7 @@ public class Database {
 		}
 		return null ;	
 	}
-	public ResultSet ShowReviews(String keywords)
+	public ResultSet showReviews(String keywords)
 	{
 		try {
 			Statement stmt = this.con.createStatement();
@@ -103,7 +103,7 @@ public class Database {
 		}
 		return null ;	
 	}
-	public int UpdateReviews(String rate,String description,String reviewId)
+	public int updateReviews(String rate,String description,String reviewId)
 	{
 		try {
 			Statement stmt = this.con.createStatement();
@@ -114,7 +114,7 @@ public class Database {
 		}
 		return 0;	
 	}
-	public ResultSet VerifyUser(String name)
+	public ResultSet verifyUser(String name)
 	{
 		try {
 			Statement stmt = this.con.createStatement();
@@ -124,7 +124,7 @@ public class Database {
 		}
 		return null ;	
 	}
-	public ResultSet ViewBUsinessLIst()
+	public ResultSet viewBUsinessLIst()
 	{
 		try {
 			Statement stmt = this.con.createStatement();
@@ -134,12 +134,35 @@ public class Database {
 		}
 		return null ;	
 	}
-	public ResultSet ViewSpecialBUsinessLIst(String paramBusinessid,String searchName)
+	public ResultSet viewSpecialBUsinessLIst(String paramBusinessid,String searchName)
 	{
 		try {
 			Statement stmt = this.con.createStatement();
 			ResultSet result = stmt.executeQuery("select * from business left outer join review on business.businessid = review.businessid where business.businessid=\""
 					+ paramBusinessid + "\" or business.businessname=\"" + searchName + "\";");
+			return result;
+		} catch (Exception e) {
+		}
+		return null ;	
+	}
+	public int addBusinessProcessor( String businessName,String address,String state,String city,String type){
+			try {
+				Statement stmt = this.con.createStatement();
+				System.out.println("insert into business (businessname,addresss,state,city,type) value (\""+businessName+"\",\""+address+"\","+state+",\""+city+"\",\""+type+"\")");
+			int result = stmt.executeUpdate("insert into business (businessid, businessname,addresss,state,city,type) value (uuid(), \""+businessName+"\",\""+address+"\",\""+state+"\",\""+city+"\",\""+type+"\")");
+			return result;
+			}
+			catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return 0;
+			}
+	}
+	public ResultSet showUser()
+	{
+		try {
+			Statement stmt = this.con.createStatement();
+			ResultSet result = stmt.executeQuery("select username from user");
 			return result;
 		} catch (Exception e) {
 		}
