@@ -51,16 +51,10 @@ public class SearchReviewsServlet extends BaseServlet {
 		}
 		HashMap<String, Object> searchreviewlist = new HashMap<String, Object>();
 		try {
-
-			// Create database instance to build database connection
-			Connection db = Database.getDBInstance();
-			// Create query statement
-			Statement stmt = db.createStatement();
-			// Execute a query, which returns a ResultSet object
-			ResultSet result = stmt.executeQuery(
-					"select * from business right outer join review on business.businessid = review.businessid ;");
+			Database db=new Database();
+			ResultSet result = db.searchReviews();
 			searchreviewlist = BuildDataList.buildDataList(result);
-			db.close();
+			db.closeDB();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -49,7 +49,7 @@ public class ViewBusinessListServlet extends BaseServlet {
 		try {
 
 			Database db = new Database();
-			ResultSet result = db.ViewBUsinessLIst();
+			ResultSet result = db.viewBUsinessLIst();
 			formattedData = BuildDataList.buildDataList(result);
 			db.closeDB();
 		} catch (SQLException e) {

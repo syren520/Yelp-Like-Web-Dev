@@ -36,7 +36,7 @@ public class RegisterUserServlet extends BaseServlet{
 			return;
 		}
 		Database db=new Database();
-		int result = db.RegisterUser(name, passWord, email);
+		int result = db.registerUser(name, passWord, email);
 		if (result == 1) {
 			HttpSession session = request.getSession();
 			session.setAttribute(USERNAME, name);

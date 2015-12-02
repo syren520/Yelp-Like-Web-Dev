@@ -49,19 +49,9 @@ public class DeleteReviewsServlet extends BaseServlet {
 			return;
 		}
 		String reviewId = request.getParameter("reviewId");
-		try {
-
-			// Create database instance to build database connection
-			Connection db = Database.getDBInstance();
-			// Create query statement
-			Statement stmt = db.createStatement();
-			// Delete a review 
-			stmt.executeUpdate("delete from review where reviewid = " + reviewId );
-			db.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Database db=new Database();
+		int result = db.deleteReviews(reviewId);
 		response.sendRedirect(response.encodeRedirectURL("/myReviews"));
+		db.closeDB();
 	}
 }

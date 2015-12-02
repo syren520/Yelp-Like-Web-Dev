@@ -50,7 +50,7 @@ public class ViewSpecialBusinessListServlet extends BaseServlet {
 		HashMap<String, Object> speciallist = new HashMap<String, Object>();
 		try {
 			Database db = new Database();
-			ResultSet result = db.ViewSpecialBUsinessLIst(paramBusinessid, searchName);
+			ResultSet result = db.viewSpecialBUsinessLIst(paramBusinessid, searchName);
 			speciallist = BuildDataList.buildDataList(result);
 			if (speciallist == null) {
 				response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + NOTFOUND));

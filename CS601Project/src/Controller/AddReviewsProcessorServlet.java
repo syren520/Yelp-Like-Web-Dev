@@ -45,7 +45,7 @@ public class AddReviewsProcessorServlet extends BaseServlet {
 		String reviewContent = request.getParameter("description");
 		String reviewRating = request.getParameter("rate");
 		Database db=new Database();
-		int result = db.AddReviews2(name, businessId, reviewRating, reviewContent);
+		int result = db.addReviewsProcessor(name, businessId, reviewRating, reviewContent);
 		response.sendRedirect(response.encodeRedirectURL("/viewBusinessList"));
 		db.closeDB();
 	}

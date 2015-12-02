@@ -39,7 +39,7 @@ public class VerifyUserServlet extends BaseServlet {
 		}
 		try {
 			Database db = new Database();
-			ResultSet result = db.VerifyUser(name);
+			ResultSet result = db.verifyUser(name);
 			if (!result.next()) {
 				// ResultSet is empty
 				response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + ERROR));

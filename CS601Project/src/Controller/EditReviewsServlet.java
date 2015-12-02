@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,19 +46,17 @@ public class EditReviewsServlet extends BaseServlet {
 		String reviewId = request.getParameter("reviewId");
 		String reviewContent = "";
 		String reviewRating = "";
-		try {
-			Connection db = Database.getDBInstance();
-			Statement stmt = db.createStatement();
-			ResultSet reviewinfo = stmt.executeQuery("select * from review where reviewid =" + reviewId);
-			if (reviewinfo.next()) {
-				reviewContent = reviewinfo.getString("description");
-				reviewRating = reviewinfo.getString("rating");
+    		Database db=new Database();
+			ResultSet result = db.editReviews(reviewId);
+			try {
+				if (result .next()) {
+					reviewContent = result .getString("description");
+					reviewRating = result .getString("rating");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		// user is not logged in(which means user not in session), redirect to
 		// login page
 		if (name == null) {
@@ -74,6 +73,7 @@ public class EditReviewsServlet extends BaseServlet {
 		// output text box requesting user name
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());
+		db.closeDB();
 	}
 
 }

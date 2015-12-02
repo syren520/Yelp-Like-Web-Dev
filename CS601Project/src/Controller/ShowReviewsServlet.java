@@ -52,20 +52,14 @@ public class ShowReviewsServlet extends BaseServlet {
 		HashMap<String, Object> searchreviewlist = new HashMap<String, Object>();
 		try {
 
-			// Create database instance to build database connection
-			Connection db = Database.getDBInstance();
-			// Create query statement
-			Statement stmt = db.createStatement();
-			// Execute a query, which returns a ResultSet object
-			ResultSet result = stmt.executeQuery(
-					"select * from business right outer join review on business.businessid = review.businessid where review.description like \"%"
-							+ keywords + "%\";");
+			Database db = new Database();
+			ResultSet result = db.showReviews(keywords);
 			searchreviewlist = BuildDataList.buildDataList(result);
 			if (searchreviewlist == null) {
 				response.sendRedirect(response.encodeRedirectURL("/searchReviews?" + STATUS + "=" + NOTFOUND));
 				return;
 			}
-			db.close();
+			db.closeDB();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -54,21 +54,14 @@ public class MyReviewsServlet extends BaseServlet {
 		boolean search = status != null && status.equals(NOREVIEWS) ? false : true;
 		if (search) {
 			try {
-
-				// Create database instance to build database connection
-				Connection db = Database.getDBInstance();
-				// Create query statement
-				Statement stmt = db.createStatement();
-				// Execute a query, which returns a ResultSet object
-				ResultSet result = stmt.executeQuery(
-						"select * from business right outer join review on business.businessid = review.businessid where review.username=\""
-								+ name + "\";");
+				Database db=new Database();
+				ResultSet result = db.myReviews(name);
 				myreviewlist = BuildDataList.buildDataList(result);
 				if (myreviewlist == null) {
 					response.sendRedirect(response.encodeRedirectURL("/myReviews?" + STATUS + "=" + NOREVIEWS));
 					return;
 				}
-				db.close();
+				db.closeDB();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

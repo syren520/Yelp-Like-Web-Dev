@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.fabric.xmlrpc.base.Data;
+
 import Model.Database;
 
 /*
@@ -42,20 +44,9 @@ public class UpdateReviewsServlet extends BaseServlet {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
 			return;
 		}
-		try {
-
-			// Create database instance to build database connection
-			Connection db = Database.getDBInstance();
-			// Create query statement
-			Statement stmt = db.createStatement();
-			// Execute a query, which returns a ResultSet object
-			stmt.executeUpdate("update review set rating =" + rate + ",description =\"" + description
-					+ "\"where reviewid = " + reviewId);
-			db.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			Database db = new Database();
+			db.updateReviews(rate, description, reviewId);
+			db.closeDB();
 		response.sendRedirect(response.encodeRedirectURL("/myReviews"));
 	}
 }
