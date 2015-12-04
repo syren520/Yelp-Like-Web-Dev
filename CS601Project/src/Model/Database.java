@@ -134,12 +134,22 @@ public class Database {
 		}
 		return null ;	
 	}
-	public ResultSet viewSpecialBUsinessLIst(String paramBusinessid,String searchName)
+	public ResultSet viewSpecialBusinessList(String paramBusinessid)
 	{
 		try {
 			Statement stmt = this.con.createStatement();
 			ResultSet result = stmt.executeQuery("select * from business left outer join review on business.businessid = review.businessid where business.businessid=\""
-					+ paramBusinessid + "\" or business.businessname=\"" + searchName + "\";");
+					+ paramBusinessid + "\";");
+			return result;
+		} catch (Exception e) {
+		}
+		return null ;	
+	}
+	public ResultSet searchBusiness(String searchName,String selection)
+	{
+		try {
+			Statement stmt = this.con.createStatement();
+			ResultSet result = stmt.executeQuery("select * from business left outer join review on business.businessid = review.businessid where business."+selection+" like \"%" + searchName + "%\";");
 			return result;
 		} catch (Exception e) {
 		}

@@ -36,6 +36,7 @@ public class BootStrap {
 		servhandler.addServlet(AddBusinessServlet.class, "/addBusiness");
 		servhandler.addServlet(AddBusinessProcessorServlet.class, "/addBusinessProcessor");
 		servhandler.addServlet(ShowUserServlet .class, "/showUser");
+		servhandler.addServlet(SearchBusinessServlet.class, "/searchBusiness");
 		//Make server could serve static files
 		ResourceHandler resource_handler = new ResourceHandler();
 		//Set the directory to true
