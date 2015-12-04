@@ -11,7 +11,9 @@ $headerIn()$
                     <li class="active"><a style="color: #696969">$userName$</a></li>
                     <li class="nav-header">User Menu</li>
                     <li><a href="/dashboard">Back home</a></li>
-                    <li><a href="/addBusiness">Add business</a></li>
+                    <li><a href="/searchReviews">Search reviews you want</a></li>
+				    <li> <a href="/myReviews">My Reviews</a></li>
+                    <li><a href="logout">Log out</a></li>
                 </ul>
             </div>
         </div>
@@ -21,8 +23,15 @@ $headerIn()$
                 <!--Reference web resource - collapse: http://getbootstrap.com/javascript/#collapse-->
                 <div class="content-info">
                     <div class="row">
-                       <form action="/viewSpecialBusinessList" method="get">
-                        <p class="search-bar"><b>Search business you want: <input type="text" name="searchname" /></b></p>
+                    <p><b>select business by:</b></p>
+                       <form action="/searchBusiness" method="get">
+                        <select name="selection" >
+					  <option class="select-list"  value="state"/>state</option>
+					  <option class="select-list"  value="city"/>city</option>
+					  <option class="select-list"  value="type"/>type</option>
+					  <option class="select-list"  value="businessname"/>businessname</option>
+					</select>
+                        <p class="search-bar"><b>Please input the keywords of your select: <input type="text" name="searchname" /></b></p>
                         <input type="submit" value="Submit" />
                        </form>
                        $if(!search)$

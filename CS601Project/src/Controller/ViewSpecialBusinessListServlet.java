@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.channels.SelectionKey;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,7 +43,6 @@ public class ViewSpecialBusinessListServlet extends BaseServlet {
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute(USERNAME);
 		String paramBusinessid = request.getParameter("businessid");
-		String searchName = request.getParameter("searchname");
 		if (name == null) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
 			return;
@@ -50,7 +50,7 @@ public class ViewSpecialBusinessListServlet extends BaseServlet {
 		HashMap<String, Object> speciallist = new HashMap<String, Object>();
 		try {
 			Database db = new Database();
-			ResultSet result = db.viewSpecialBUsinessLIst(paramBusinessid, searchName);
+			ResultSet result = db.viewSpecialBusinessList(paramBusinessid );
 			speciallist = BuildDataList.buildDataList(result);
 			if (speciallist == null) {
 				response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + NOTFOUND));

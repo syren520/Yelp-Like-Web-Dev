@@ -24,6 +24,7 @@ public class BuildDataList {
 			String businessCity = result.getString("state");
 			String businessState = result.getString("city");
 			String businessAddress = result.getString("addresss");
+			String businessType = result.getString("type");
 			String reviewId = result.getString("reviewid");
 			String reviewUser = result.getString("username");
 			String reviewContent = result.getString("description");
@@ -38,6 +39,7 @@ public class BuildDataList {
 				businessInfo.put("businessCity", businessCity);
 				businessInfo.put("businessState", businessState);
 				businessInfo.put("businessAddress", businessAddress);
+				businessInfo.put("businessType", businessType);
 				// Create review list
 				reviewIdList = new TreeSet<String>();
 				if (reviewId != null) {
