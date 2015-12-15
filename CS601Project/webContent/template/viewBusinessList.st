@@ -1,4 +1,4 @@
-viewBusinessList(userName,businessesList,reviewsList,search) ::= <<
+viewBusinessList(userName,businessesList,reviewsList,search,imageList, invalidData) ::= <<
 $headerIn()$
     <div class="row">
         <h1 class="home-title">Welcome to Yap!</h1>
@@ -13,6 +13,7 @@ $headerIn()$
                     <li><a href="/dashboard">Back home</a></li>
                     <li><a href="/searchReviews">Search reviews you want</a></li>
 				    <li> <a href="/myReviews">My Reviews</a></li>
+                    <li><a href="addBusiness">Add business</a></li>
                     <li><a href="logout">Log out</a></li>
                 </ul>
             </div>
@@ -31,12 +32,15 @@ $headerIn()$
 					  <option class="select-list"  value="type"/>type</option>
 					  <option class="select-list"  value="businessname"/>businessname</option>
 					</select>
-                        <p class="search-bar"><b>Please input the keywords of your select: <input type="text" name="searchname" /></b></p>
+                        <p class="search-bar"><b>Please input the keywords of your select: <input class="input-box" type="text" name="searchname" /></b></p>
                         <input type="submit" value="Submit" />
                        </form>
                        $if(!search)$
-				        <label class="business-list-error">Can't find the business you want,please try again! </label>
-				       $endif$				       
+				        <label class="error-message">Can't find the business you want,please try again! </label>
+				       $endif$		
+				       $if(invalidData)$
+				        <label class="error-message">Invalid input data</label>
+				       $endif$			       
 				            $businessesList.keys:{k|
 				            <div class="panel panel-default">
 						            <div class="panel-heading">
@@ -57,6 +61,11 @@ $headerIn()$
 							                  	<span class="review">
 													$reviewsList.(r).reviewUser$ - $reviewsList.(r).reviewRating$ - $reviewsList.(r).reviewContent$
 							    				</span>
+							    				<ul class="pictures">
+							    				$imageList.(r):{p|
+							                 		<li><img src="$imageList.(r).(p)$"></img></li>
+							                 	}$
+							                 	</ul>
 							                  </li>
 				              				}$  
 			              			 	</ul>

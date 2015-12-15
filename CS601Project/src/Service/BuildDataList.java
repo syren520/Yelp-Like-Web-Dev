@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 
+/*
+ * build a dataList that contains businessList and ReviewList
+ */
 public class BuildDataList {
 	public static HashMap<String, Object> buildDataList(ResultSet result) throws SQLException {
 		// Data structure to store nested busniesses objects with review list
@@ -69,7 +72,8 @@ public class BuildDataList {
 			return null;
 		}
 		// Calculate average rating of business
-		// web resource reference - iterate hashmap in java：http://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
+		// web resource reference - iterate hashmap in
+		// java：http://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
 		Iterator businessIterator = businessesList.entrySet().iterator();
 		while (businessIterator.hasNext()) {
 			Map.Entry pair = (Map.Entry) businessIterator.next();

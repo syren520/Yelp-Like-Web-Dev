@@ -1,4 +1,4 @@
-viewSpecialBusinessList(userName,businessesList,reviewsList) ::= <<
+viewSpecialBusinessList(userName,businessesList,reviewsList,imageList) ::= <<
 $headerIn()$
     <div class="row">
         <h1 class="home-title">Welcome to Yap!</h1>
@@ -59,9 +59,15 @@ $headerIn()$
 							                  	<span class="review">
 													$reviewsList.(r).reviewUser$ - $reviewsList.(r).reviewRating$ - $reviewsList.(r).reviewContent$
 							    				</span>
+							    				<ul class="pictures">
+							    				$imageList.(r):{p|
+							                 		<li><img src="$imageList.(r).(p)$"></img></li>
+							                 	}$
+							                 	</ul>
 							                  </li>
-				              				}$  
+				              				}$ 
 			              			 	</ul>
+ 
 						           	 </div>
 					         </div>
 						     <div id="map"></div>

@@ -1,24 +1,16 @@
 package Controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupDir;
+import org.apache.commons.io.FileUtils;
 
 import Model.Database;
-import Service.BuildDataList;
 
 /*
  * Servlet invoked at delete.
@@ -42,7 +34,6 @@ public class DeleteReviewsServlet extends BaseServlet {
 		//Check if user exist in session
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute(USERNAME);
-
 		// user is not logged in(which means user not in session), redirect to login page
 		if (name == null) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
@@ -50,7 +41,10 @@ public class DeleteReviewsServlet extends BaseServlet {
 		}
 		String reviewId = request.getParameter("reviewId");
 		Database db=new Database();
-		int result = db.deleteReviews(reviewId);
+		db.deleteReviews(reviewId);
+		//define a file folder with path to delete
+		File reviewImageFolder = new File("./webContent/image/"+reviewId+"/");
+		FileUtils.deleteDirectory(reviewImageFolder);
 		response.sendRedirect(response.encodeRedirectURL("/myReviews"));
 		db.closeDB();
 	}

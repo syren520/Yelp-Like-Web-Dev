@@ -39,8 +39,12 @@ public class SearchBusinessServlet extends BaseServlet {
 		// Check if user exist in session
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute(USERNAME);
-		String searchName = request.getParameter("searchname");
+		String searchName = request.getParameter("searchname").trim();
 		String selection=request.getParameter("selection");
+		if (selection == null || selection.trim().equals("")) {
+			response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + INVALIDINPUT));
+			return;
+		}
 		if (name == null) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
 			return;
@@ -49,7 +53,6 @@ public class SearchBusinessServlet extends BaseServlet {
 		try {
 			Database db = new Database();
 			ResultSet result = db.searchBusiness( searchName,selection );
-			System.out.println(result.toString());
 			selectlist = BuildDataList.buildDataList(result);
 			if (selectlist == null) {
 				response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + NOTFOUND));

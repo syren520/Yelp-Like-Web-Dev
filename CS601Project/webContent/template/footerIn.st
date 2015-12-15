@@ -1,5 +1,5 @@
 footerIn()::= <<
-<script src="/JS/addBusiness.js"></script>
+<script src="/JS/errorMessage.js"></script>
 </body>
 </html>
 >>

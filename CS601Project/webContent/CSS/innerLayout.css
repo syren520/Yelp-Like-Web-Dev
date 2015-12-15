@@ -30,3 +30,13 @@
 .error-message {
 	color: #FF0000;
 }
+.selectrate{
+	display: inline-block;
+}
+.pictures img{
+	width: 100px;
+	height: 100px;
+}
+.pictures li{
+	display: inline-block;
+}

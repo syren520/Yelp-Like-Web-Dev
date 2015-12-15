@@ -1,4 +1,4 @@
-myReviews(userName,businessesList,reviewsList,search)::= <<
+myReviews(userName,businessesList,reviewsList,search,imageList)::= <<
 $headerIn()$
     <div class="row">
         <h1 class="home-title">Welcome to Yap!</h1>
@@ -44,6 +44,11 @@ $headerIn()$
 											<a href="/delete?reviewId=$r$"> DELETE</a>
 											<a href="/editReviews?reviewId=$r$"> EDIT</a>
 					    				</span>
+					    				<ul class="pictures">
+							    				$imageList.(r):{p|
+							                 		<li><img src="$imageList.(r).(p)$"></img></li>
+							                 	}$
+							           </ul>
 					                  </li>
 		              				}$  
 	              			 	</ul>

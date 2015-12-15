@@ -2,11 +2,8 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.channels.SelectionKey;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -20,6 +17,7 @@ import org.stringtemplate.v4.STGroupDir;
 
 import Model.Database;
 import Service.BuildDataList;
+import Service.BuildImageList;
 
 /*
  * Servlet invoked at viewSpecialBusinessList.
@@ -43,30 +41,34 @@ public class ViewSpecialBusinessListServlet extends BaseServlet {
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute(USERNAME);
 		String paramBusinessid = request.getParameter("businessid");
+		HashMap<String, Object> imageList = new HashMap<String, Object>();
+		Database db = new Database();
+		ResultSet reviewIds = db.getSpecificReviewIds(paramBusinessid);
+		imageList = BuildImageList.buildImageList(reviewIds, db);
 		if (name == null) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
 			return;
 		}
 		HashMap<String, Object> speciallist = new HashMap<String, Object>();
 		try {
-			Database db = new Database();
-			ResultSet result = db.viewSpecialBusinessList(paramBusinessid );
+			ResultSet result = db.viewSpecialBusinessList(paramBusinessid);
 			speciallist = BuildDataList.buildDataList(result);
 			if (speciallist == null) {
 				response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + NOTFOUND));
 				return;
 			}
-			db.closeDB();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		db.closeDB();
 		// Use string template to generate the html page
 		STGroup stGroup = new STGroupDir("webContent/template", '$', '$');
 		ST view = stGroup.getInstanceOf("viewSpecialBusinessList");
 		view.add("userName", name);
 		view.add("businessesList", speciallist.get("businessesList"));
 		view.add("reviewsList", speciallist.get("reviewsList"));
+		view.add("imageList", imageList);
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());
 	}

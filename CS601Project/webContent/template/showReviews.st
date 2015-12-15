@@ -1,4 +1,4 @@
-showReviews(userName,businessesList,reviewsList)::= <<
+showReviews(userName,businessesList,reviewsList,imageList)::= <<
 $headerIn()$
     <div class="row">
         <h1 class="home-title">Welcome to Yap!</h1>
@@ -40,6 +40,11 @@ $headerIn()$
 			                  	<span class="review">
 									$reviewsList.(r).reviewUser$ - $reviewsList.(r).reviewRating$ - $reviewsList.(r).reviewContent$
 			    				</span>
+			    				<br>
+			    				$imageList.(r):{p|
+							     <img src="$imageList.(r).(p)$"></img>
+							    }$
+			    				</br>
 			                  </li>
               				}$  
           			 	</ul>

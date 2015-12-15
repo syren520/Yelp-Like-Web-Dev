@@ -2,10 +2,8 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -19,6 +17,7 @@ import org.stringtemplate.v4.STGroupDir;
 
 import Model.Database;
 import Service.BuildDataList;
+import Service.BuildImageList;
 
 /*
  * Servlet invoked at searchReviews.
@@ -45,20 +44,22 @@ public class SearchReviewsServlet extends BaseServlet {
 		String keywords = request.getParameter("keywords");
 		// user is not logged in(which means user not in session), redirect to
 		// login page
+		Database db = new Database();
 		if (name == null) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
 			return;
 		}
 		HashMap<String, Object> searchreviewlist = new HashMap<String, Object>();
 		try {
-			Database db=new Database();
-			ResultSet result = db.searchReviews();
+			ResultSet result = db.getAllReviews();
 			searchreviewlist = BuildDataList.buildDataList(result);
-			db.closeDB();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		HashMap<String, Object> imageList = new HashMap<String, Object>();
+		ResultSet allReviewId = db.getAllReviewIds();
+		imageList = BuildImageList.buildImageList(allReviewId, db);
 		String status = request.getParameter(STATUS);
 		boolean search = status != null && status.equals(NOTFOUND) ? false : true;
 		// Use string template to generate the html page
@@ -68,8 +69,10 @@ public class SearchReviewsServlet extends BaseServlet {
 		view.add("reviewsList", searchreviewlist.get("reviewsList"));
 		view.add("search", search);
 		view.add("userName", name);
+		view.add("imageList", imageList);
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());
+		db.closeDB();
 
 	}
 }

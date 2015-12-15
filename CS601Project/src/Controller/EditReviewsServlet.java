@@ -2,13 +2,9 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
 
-import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +15,6 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 
 import Model.Database;
-import Service.BuildDataList;
 
 /*
  * Servlet invoked at editReviews.
@@ -44,19 +39,18 @@ public class EditReviewsServlet extends BaseServlet {
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute(USERNAME);
 		String reviewId = request.getParameter("reviewId");
+		String status = request.getParameter(STATUS);
 		String reviewContent = "";
-		String reviewRating = "";
-    		Database db=new Database();
-			ResultSet result = db.editReviews(reviewId);
-			try {
-				if (result .next()) {
-					reviewContent = result .getString("description");
-					reviewRating = result .getString("rating");
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		Database db = new Database();
+		ResultSet result = db.getReview(reviewId);
+		try {
+			if (result.next()) {
+				reviewContent = result.getString("description");
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// user is not logged in(which means user not in session), redirect to
 		// login page
 		if (name == null) {
@@ -67,10 +61,8 @@ public class EditReviewsServlet extends BaseServlet {
 		ST view = stGroup.getInstanceOf("editReviews");
 		view.add("userName", name);
 		view.add("reviewId", reviewId);
-		view.add("rate", reviewRating);
 		view.add("description", reviewContent);
-
-		// output text box requesting user name
+		view.add("status", status);
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());
 		db.closeDB();

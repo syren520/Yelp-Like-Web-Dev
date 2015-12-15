@@ -1,16 +1,11 @@
 package Controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.mysql.fabric.xmlrpc.base.Data;
 
 import Model.Database;
 
@@ -44,9 +39,13 @@ public class UpdateReviewsServlet extends BaseServlet {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
 			return;
 		}
-			Database db = new Database();
-			db.updateReviews(rate, description, reviewId);
-			db.closeDB();
+		if (rate == null || rate.trim().equals("") || description == null || description.trim().equals("")) {
+			response.sendRedirect(response.encodeRedirectURL("/editReviews?reviewid=" + reviewId + "&" + STATUS + "=" + INVALIDINPUT));
+			return;
+		}
+		Database db = new Database();
+		db.updateReviews(rate, description, reviewId);
+		db.closeDB();
 		response.sendRedirect(response.encodeRedirectURL("/myReviews"));
 	}
 }

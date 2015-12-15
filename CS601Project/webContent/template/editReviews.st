@@ -1,4 +1,4 @@
-editReviews(userName,reviewId,rate,description)::= <<
+editReviews(userName,reviewId,rate,description,status)::= <<
 $headerIn()$
     <div class="row">
         <h1 class="home-title">Welcome to Yap!</h1>
@@ -22,9 +22,21 @@ $headerIn()$
 	        <h2>Edit reviews</h2>
 	        <hr>
 	        <div class="row">
+	        $if(status)$
+	        <p class="error-message">invalid input data</p>
+	        $endif$
 	           <form action="/updateReviews?reviewId=$reviewId$" method="get">
-	                <p class="search-bar"><b>rate: <input type="text" value="$rate$" name="rate" /></b></p>
-	                <p class="search-bar"><b>description: <input type="text" value="$description$" name="description" / ></b></p>
+	                <p class="selectrate"><b>rate:</b></p>
+	                <select name="rate">
+	                <option class="select-list" value="1"/>1</option>
+	                <option class="select-list" value="2"/>2</option>
+	                <option class="select-list" value="3"/>3</option>
+	                <option class="select-list" value="4"/>4</option>
+	                <option class="select-list" value="5"/>5</option>
+	                </select>
+	                <br>
+	                <p class="search-bar"><b>description: <input class="input-box" type="text" value="$description$" name="description" / ></b></p>
+	                </br>
 	                <input type="text" value="$reviewId$" name="reviewId" style="display:none">
 	                <input type="submit" value="submit" / >                        
                </form>

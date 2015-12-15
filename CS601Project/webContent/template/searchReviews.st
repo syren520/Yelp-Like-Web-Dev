@@ -1,4 +1,4 @@
-searchReviews(userName,businessesList,reviewsList,search)::= <<
+searchReviews(userName,businessesList,reviewsList,search,imageList)::= <<
 $headerIn()$
     <div class="row">
         <h1 class="home-title">Welcome to Yap!</h1>
@@ -22,11 +22,11 @@ $headerIn()$
 	        <hr>
 	        <div class="row">
                <form action="/showReviews" method="get">
-                	<p class="search-bar"><b>Please input the keywords of the review you want: <input type="text" name="keywords" /></b></p>
+                	<p class="search-bar"><b>Please input the keywords of the review you want: <input class="input-box" type="text" name="keywords" /></b></p>
                 	<input type="submit" value="Submit" />
                </form>
                $if(!search)$
-		        	<label class="review-search-error">Can't find the reviews contains the keywords you want. </label>
+		        	<label class="error-message">Can't find the reviews contains the keywords you want. </label>
 		       $endif$				       
 		            $businessesList.keys:{k|
 		            <div class="panel panel-default">
@@ -46,6 +46,11 @@ $headerIn()$
 				                  	<span class="review">
 										$reviewsList.(r).reviewUser$ - $reviewsList.(r).reviewRating$ - $reviewsList.(r).reviewContent$
 				    				</span>
+				    				<br>
+							    	$imageList.(r):{p|
+							             <img src="$imageList.(r).(p)$"></img>
+							         }$
+							        </br>
 				                  </li>
 	              				}$  
               			 	</ul>

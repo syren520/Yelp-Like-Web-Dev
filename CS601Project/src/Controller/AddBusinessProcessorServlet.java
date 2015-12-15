@@ -36,7 +36,7 @@ public class AddBusinessProcessorServlet extends BaseServlet {
 			return;
 		}
 		Database db=new Database();
-		int result = db.addBusinessProcessor(businessName,address,state,city,type);
+		int result = db.addBusiness(businessName,address,state,city,type);
 		response.sendRedirect(response.encodeRedirectURL("/viewBusinessList"));
 		db.closeDB();
 	}

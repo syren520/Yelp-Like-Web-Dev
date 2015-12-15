@@ -23,6 +23,8 @@ public class BaseServlet extends HttpServlet {
 	public static final String REGISTRATION_ERROR_INVALID_DATA = "registration_error_invalid_data";
 	public static final String NOTFOUND = "not_found";
 	public static final String NOREVIEWS = "noreviews";
+	public static final String INVALIDINPUT = "invalid_input_data";
+
 
 	/*
 	 * Prepare a response of HTML 200 - OK. Set the content type and status.
