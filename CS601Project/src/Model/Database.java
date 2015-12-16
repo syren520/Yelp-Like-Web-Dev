@@ -11,10 +11,10 @@ import java.sql.Statement;
  */
 public class Database {
 	// Set configuration of database
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";
-	private static final String DB = "user55";
-	private static final String domain = "jdbc:mysql://127.0.0.1:3306/";
+	private static final String USERNAME  = "user55";
+	private static final String PASSWORD  = "user55";
+	private static final String DB  = "user55";
+	private static final String domain = "jdbc:mysql://sql.cs.usfca.edu:3306/";
 	private Connection con;
 
 	public Database() {
