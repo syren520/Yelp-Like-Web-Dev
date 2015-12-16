@@ -43,7 +43,7 @@ public class DeleteReviewsServlet extends BaseServlet {
 		Database db=new Database();
 		db.deleteReviews(reviewId);
 		//define a file folder with path to delete
-		File reviewImageFolder = new File("./webContent/image/"+reviewId+"/");
+		File reviewImageFolder = new File("/webContent/image/"+reviewId+"/");
 		FileUtils.deleteDirectory(reviewImageFolder);
 		response.sendRedirect(response.encodeRedirectURL("/myReviews"));
 		db.closeDB();
