@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,15 +15,14 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 
 import Model.Database;
-import Service.BuildDataList;
-import Service.BuildImageList;
 
 /*
- * Servlet invoked at viewSpecialBusinessList.
- * Generate view special business list page.
+ * Servlet invoked at editReviews.
+ * Generate edit view page.
  * Support both get and post method
  */
-public class ViewSpecialBusinessListServlet extends BaseServlet {
+public class EditReviewsServlet extends BaseServlet {
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
@@ -40,36 +38,34 @@ public class ViewSpecialBusinessListServlet extends BaseServlet {
 		// Check if user exist in session
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute(USERNAME);
-		String paramBusinessid = request.getParameter("businessid");
-		HashMap<String, Object> imageList = new HashMap<String, Object>();
+		String reviewId = request.getParameter("reviewId");
+		String status = request.getParameter(STATUS);
+		String reviewContent = "";
 		Database db = new Database();
-		ResultSet reviewIds = db.getSpecificReviewIds(paramBusinessid);
-		imageList = BuildImageList.buildImageList(reviewIds, db);
-		if (name == null) {
-			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
-			return;
-		}
-		HashMap<String, Object> speciallist = new HashMap<String, Object>();
+		ResultSet result = db.getReview(reviewId);
 		try {
-			ResultSet result = db.viewSpecialBusinessList(paramBusinessid);
-			speciallist = BuildDataList.buildDataList(result);
-			if (speciallist == null) {
-				response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + NOTFOUND));
-				return;
+			if (result.next()) {
+				reviewContent = result.getString("description");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		db.closeDB();
-		// Use string template to generate the html page
+		// user is not logged in(which means user not in session), redirect to
+		// login page
+		if (name == null) {
+			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
+			return;
+		}
 		STGroup stGroup = new STGroupDir("webContent/template", '$', '$');
-		ST view = stGroup.getInstanceOf("viewSpecialBusinessList");
+		ST view = stGroup.getInstanceOf("editReviews");
 		view.add("userName", name);
-		view.add("businessesList", speciallist.get("businessesList"));
-		view.add("reviewsList", speciallist.get("reviewsList"));
-		view.add("imageList", imageList);
+		view.add("reviewId", reviewId);
+		view.add("description", reviewContent);
+		view.add("status", status);
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());
+		db.closeDB();
 	}
+
 }

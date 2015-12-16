@@ -1,4 +1,4 @@
-viewSpecialBusinessList(userName,businessesList,reviewsList) ::= <<
+viewSpecialBusinessList(userName,businessesList,reviewsList,imageList) ::= <<
 $headerIn()$
     <div class="row">
         <h1 class="home-title">Welcome to Yap!</h1>
@@ -10,7 +10,11 @@ $headerIn()$
                     <li class="nav-header">Welcome</li>
                     <li class="active"><a style="color: #696969">$userName$</a></li>
                     <li class="nav-header">User Menu</li>
-                    <li><a href="/dashboard">Back home</a></li>
+                     <li><a href="/dashboard">Back home</a></li>
+                    <li><a href="/viewBusinessList">View all Business List</a></li>
+                    <li><a href="/searchReviews">Search reviews you want</a></li>
+				    <li> <a href="/myReviews">My Reviews</a></li>
+                    <li><a href="logout">Log out</a></li>
                 </ul>
             </div>
         </div>
@@ -40,8 +44,14 @@ $headerIn()$
 							                <li class="list-group-item">
 							                  	<span class="glyphicon glyphicon-heart text-primary"></span>
 							                  	<span class="review">
-													Address: <span class="address">$businessesList.(k).businessAddress$,$businessesList.(k).businessState$, $businessesList.(k).businessCity$</span> 
+													Address: <span class="address">$businessesList.(k).businessAddress$,$businessesList.(k).businessState$, $businessesList.(k).businessCity$</span>
 							    				</span>
+							    			</li>
+							    			 <li class="list-group-item">
+							    				<span class="glyphicon glyphicon-heart text-primary"></span>
+							                  	<span class="review">
+							    				Type: <span class="type">$businessesList.(k).businessType$</span>
+							                    </span>
 							                </li>
 				              				$businessesList.(k).reviewIdList:{r| 
 							                  <li class="list-group-item">
@@ -49,9 +59,15 @@ $headerIn()$
 							                  	<span class="review">
 													$reviewsList.(r).reviewUser$ - $reviewsList.(r).reviewRating$ - $reviewsList.(r).reviewContent$
 							    				</span>
+							    				<ul class="pictures">
+							    				$imageList.(r):{p|
+							                 		<li><img src="$imageList.(r).(p)$"></img></li>
+							                 	}$
+							                 	</ul>
 							                  </li>
-				              				}$  
+				              				}$ 
 			              			 	</ul>
+ 
 						           	 </div>
 					         </div>
 						     <div id="map"></div>

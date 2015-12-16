@@ -17,14 +17,13 @@ import org.stringtemplate.v4.STGroupDir;
 
 import Model.Database;
 import Service.BuildDataList;
-import Service.BuildImageList;
 
 /*
- * Servlet invoked at viewBusinessList.
- * Generate view business list page.
+ * Servlet invoked at searchBusiness.
+ * Allow user to search business by some keywords.
  * Support both get and post method
  */
-public class ViewBusinessListServlet extends BaseServlet {
+public class SearchBusinessServlet extends BaseServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
@@ -40,45 +39,37 @@ public class ViewBusinessListServlet extends BaseServlet {
 		// Check if user exist in session
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute(USERNAME);
-		Database db = new Database();
+		String searchName = request.getParameter("searchname").trim();
+		String selection=request.getParameter("selection");
+		if (selection == null || selection.trim().equals("")) {
+			response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + INVALIDINPUT));
+			return;
+		}
 		if (name == null) {
 			response.sendRedirect(response.encodeRedirectURL("/login?" + STATUS + "=" + NOT_LOGGED_IN));
 			return;
 		}
-		HashMap<String, Object> formattedData = new HashMap<String, Object>();
+		HashMap<String, Object> selectlist = new HashMap<String, Object>();
 		try {
-			ResultSet result = db.viewBusinessList();
-			formattedData = BuildDataList.buildDataList(result);
+			Database db = new Database();
+			ResultSet result = db.searchBusiness( searchName,selection );
+			selectlist = BuildDataList.buildDataList(result);
+			if (selectlist == null) {
+				response.sendRedirect(response.encodeRedirectURL("/viewBusinessList?" + STATUS + "=" + NOTFOUND));
+				return;
+			}
+			db.closeDB();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		HashMap<String, Object> imageList = new HashMap<String, Object>();
-		ResultSet allReviewId = db.getAllReviewIds();
-		imageList = BuildImageList.buildImageList(allReviewId, db);
-		// Get status to check the searching result
-		String status = request.getParameter(STATUS);
-		boolean search = status != null && status.equals(NOTFOUND) ? false : true;
-		boolean invalidData = status != null && status.equals(INVALIDINPUT) ? true : false;
 		// Use string template to generate the html page
 		STGroup stGroup = new STGroupDir("webContent/template", '$', '$');
-		ST view = stGroup.getInstanceOf("viewBusinessList");
+		ST view = stGroup.getInstanceOf("searchBusiness");
 		view.add("userName", name);
-		if (formattedData == null) {
-			// If no business exist, then set businesseslist and reviewslist to
-			// null
-			view.add("businessesList", null);
-			view.add("reviewsList", null);
-		} else {
-			// Otherwise put busiesslist and reviewslist in template
-			view.add("businessesList", formattedData.get("businessesList"));
-			view.add("reviewsList", formattedData.get("reviewsList"));
-		}
-		view.add("search", search);
-		view.add("imageList", imageList);
-		view.add("invalidData", invalidData);
+		view.add("businessesList", selectlist.get("businessesList"));
+		view.add("reviewsList", selectlist.get("reviewsList"));
 		PrintWriter out = prepareResponse(response);
 		out.print(view.render());
-		db.closeDB();
 	}
 }
